@@ -86,6 +86,12 @@ public abstract class DirectBitmap
 			case ImageExportFormat.Tga:
 				SaveAsTga(stream);
 				break;
+			case ImageExportFormat.Dds:
+				SaveAsDds(stream);
+				break;
+			case ImageExportFormat.Ktx:
+				SaveAsKtx(stream);
+				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(format));
 		}
@@ -102,6 +108,10 @@ public abstract class DirectBitmap
 	public abstract void SaveAsJpeg(Stream stream);
 
 	public abstract void SaveAsTga(Stream stream);
+
+	public abstract void SaveAsDds(Stream stream);
+
+	public abstract void SaveAsKtx(Stream stream);
 
 	private static int CalculateByteSize(int width, int height, int depth, int pixelSize)
 	{

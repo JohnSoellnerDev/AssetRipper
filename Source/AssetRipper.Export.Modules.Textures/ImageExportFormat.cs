@@ -32,6 +32,16 @@
 		/// <see href="https://en.wikipedia.org/wiki/Truevision_TGA"/>
 		/// </summary>
 		Tga,
+		/// <summary>
+		/// Lossless. DirectDraw Surface<br/>
+		/// <see href="https://en.wikipedia.org/wiki/DirectDraw_Surface"/>
+		/// </summary>
+		Dds,
+		/// <summary>
+		/// Lossless. Khronos Texture<br/>
+		/// <see href="https://github.khronos.org/KTX-Specification/ktxspec.v2.html"/>
+		/// </summary>
+		Ktx,
 	}
 
 	public static class ImageExportFormatExtensions
@@ -46,6 +56,8 @@
 				ImageExportFormat.Jpeg => "jpeg",
 				ImageExportFormat.Png => "png",
 				ImageExportFormat.Tga => "tga",
+				ImageExportFormat.Dds => "dds",
+				ImageExportFormat.Ktx => "ktx",
 				_ => throw new ArgumentOutOfRangeException(nameof(_this)),
 			};
 		}
@@ -62,6 +74,8 @@
 				"jpg" => ImageExportFormat.Jpeg,
 				"png" => ImageExportFormat.Png,
 				"tga" => ImageExportFormat.Tga,
+				"dds" => ImageExportFormat.Dds,
+				"ktx" => ImageExportFormat.Ktx,
 				_ => (ImageExportFormat)(-1),
 			};
 			return format >= 0;

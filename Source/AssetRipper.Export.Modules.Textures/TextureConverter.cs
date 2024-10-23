@@ -205,6 +205,8 @@ namespace AssetRipper.Export.Modules.Textures
 				TextureFormat.RG32_SIGNED => TryConvertToBitmap<ColorRG<short>, short>(textureFormat, width, height, depth, imageSize, version, data, out bitmap),
 				TextureFormat.RGB48_SIGNED => TryConvertToBitmap<ColorRGB<short>, short>(textureFormat, width, height, depth, imageSize, version, data, out bitmap),
 				TextureFormat.RGBA64_SIGNED => TryConvertToBitmap<ColorRGBA<short>, short>(textureFormat, width, height, depth, imageSize, version, data, out bitmap),
+				TextureFormat.DDS => TryConvertToBitmap<ColorBGRA32, byte>(textureFormat, width, height, depth, imageSize, version, data, out bitmap),
+				TextureFormat.KTX => TryConvertToBitmap<ColorBGRA32, byte>(textureFormat, width, height, depth, imageSize, version, data, out bitmap),
 				_ => TryConvertToBitmap<ColorBGRA32, byte>(textureFormat, width, height, depth, imageSize, version, data, out bitmap),
 			};
 		}
@@ -382,6 +384,14 @@ namespace AssetRipper.Export.Modules.Textures
 					//This needs sliced because the inputSpan can have mips.
 					inputSpan[..outputSpan.Length].CopyTo(outputSpan);
 					return true;
+
+				case TextureFormat.DDS:
+					// Implement DDS decoding logic here
+					throw new NotImplementedException();
+
+				case TextureFormat.KTX:
+					// Implement KTX decoding logic here
+					throw new NotImplementedException();
 
 				default:
 					return TryDecodeTexture<ColorBGRA32, byte>(textureFormat, width, height, inputSpan, outputSpan);

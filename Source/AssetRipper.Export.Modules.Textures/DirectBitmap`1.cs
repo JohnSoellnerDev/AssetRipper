@@ -158,6 +158,18 @@ public sealed class DirectBitmap<TColor, TChannel> : DirectBitmap
 		}
 	}
 
+	public override void SaveAsDds(Stream stream)
+	{
+		// Implement DDS saving logic here
+		throw new NotImplementedException();
+	}
+
+	public override void SaveAsKtx(Stream stream)
+	{
+		// Implement KTX saving logic here
+		throw new NotImplementedException();
+	}
+
 	private void GetDataAndComponentsForSaving(out byte[] data, out ColorComponents components)
 	{
 		if (typeof(TColor) == typeof(ColorRGBA<byte>))
