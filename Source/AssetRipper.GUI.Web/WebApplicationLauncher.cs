@@ -146,6 +146,12 @@ public static class WebApplicationLauncher
 			options.SerializerOptions.TypeInfoResolverChain.Insert(2, NullSerializerContext.Instance);
 		});
 
+		// Add SignalR
+		builder.Services.AddSignalR();
+		
+		// Add Progress Service
+		builder.Services.AddSingleton<IProgressService, ProgressService>();
+
 		builder.Services.AddOpenApi(options =>
 		{
 			options.AddOperationTransformer(new ClearOperationTagsTransformer());
@@ -159,6 +165,10 @@ public static class WebApplicationLauncher
 		builder.Logging.ConfigureLoggingLevel();
 
 		WebApplication app = builder.Build();
+
+		// Initialize progress service
+		var progressService = app.Services.GetRequiredService<IProgressService>();
+		GameFileLoader.SetProgressService(progressService);
 
 		// Configure the HTTP request pipeline.
 #if !DEBUG
@@ -195,7 +205,18 @@ public static class WebApplicationLauncher
 		app.MapStaticFile("/js/site.js", "text/javascript");
 		app.MapStaticFile("/js/commands_page.js", "text/javascript");
 		app.MapStaticFile("/js/mesh_preview.js", "text/javascript");
+		app.MapStaticFile("/js/progress.js", "text/javascript");
 		OnlineDependencies.MapDependencies(app);
+
+		//SignalR Hub
+		app.MapHub<ProgressHub>("/progressHub");
+
+		//Progress API
+		app.MapGet("/api/progress/{operationId}", async (string operationId, IProgressService progressService) =>
+		{
+			var progress = await progressService.GetProgress(operationId);
+			return progress != null ? Results.Ok(progress) : Results.NotFound();
+		}).Produces<ProgressState>();
 
 		//Normal Pages
 		app.MapGet("/", (context) =>

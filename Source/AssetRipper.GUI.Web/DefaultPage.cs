@@ -213,6 +213,8 @@ public abstract class DefaultPage : HtmlPage
 	{
 		OnlineDependencies.Popper.WriteScriptReference(writer);
 		OnlineDependencies.Bootstrap.WriteScriptReference(writer);
+		OnlineDependencies.SignalR.WriteScriptReference(writer);
 		new Script(writer).WithSrc("/js/site.js").Close();
+		new Script(writer).WithSrc("/js/progress.js").Close();
 	}
 }

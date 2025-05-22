@@ -52,7 +52,7 @@ public static class Commands
 
 			if (paths is { Length: > 0 })
 			{
-				GameFileLoader.LoadAndProcess(paths);
+				await GameFileLoader.LoadAndProcess(paths);
 			}
 			return null;
 		}
@@ -80,7 +80,7 @@ public static class Commands
 
 			if (paths is { Length: > 0 })
 			{
-				GameFileLoader.LoadAndProcess(paths);
+				await GameFileLoader.LoadAndProcess(paths);
 			}
 			return null;
 		}
@@ -106,7 +106,7 @@ public static class Commands
 			{
 				bool createSubfolder = TryGetCreateSubfolder(form);
 				path = MaybeAppendTimestampedSubfolder(path, createSubfolder);
-				GameFileLoader.ExportUnityProject(path);
+				await GameFileLoader.ExportUnityProject(path);
 			}
 			return null;
 		}
@@ -126,13 +126,13 @@ public static class Commands
 			else
 			{
 				return CommandsPath;
-			}
-
+			} 
+			
 			if (!string.IsNullOrEmpty(path))
 			{
 				bool createSubfolder = TryGetCreateSubfolder(form);
 				path = MaybeAppendTimestampedSubfolder(path, createSubfolder);
-				GameFileLoader.ExportPrimaryContent(path);
+				await GameFileLoader.ExportPrimaryContent(path);
 			}
 			return null;
 		}

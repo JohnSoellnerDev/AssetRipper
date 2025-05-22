@@ -81,6 +81,19 @@ internal static partial class OnlineDependencies
 	}
 
 	/// <summary>
+	/// <see href="https://dotnet.microsoft.com/en-us/apps/aspnet/signalr"/>
+	/// </summary>
+	internal static class SignalR
+	{
+		public const string Path = "/js/signalr.min.js";
+
+		internal static void WriteScriptReference(TextWriter writer)
+		{
+			new Script(writer).WithSrc(Path).Close();
+		}
+	}
+
+	/// <summary>
 	/// <see href="https://vuejs.org/"/>
 	/// </summary>
 	internal static class Vue
