@@ -19,9 +19,22 @@ if (canvas) {
         // Create a simple sphere that will display the material
         const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1, segments: 32 }, scene);
 
-        // Create a default PBR material (placeholder until full material data mapping is implemented)
+        // Create a PBR material and apply textures if provided
         const material = new BABYLON.PBRMaterial("previewMaterial", scene);
-        material.albedoColor = new BABYLON.Color3(1.0, 1.0, 1.0);
+
+        const albedoUrl = canvas.getAttribute('albedo-url');
+        if (albedoUrl) {
+            material.albedoTexture = new BABYLON.Texture(albedoUrl, scene, true, false, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, null, null, albedoUrl.endsWith('.png') ? '.png' : undefined);
+        } else {
+            material.albedoColor = new BABYLON.Color3(1.0, 1.0, 1.0);
+        }
+
+        const normalUrl = canvas.getAttribute('normal-url');
+        if (normalUrl) {
+            material.bumpTexture = new BABYLON.Texture(normalUrl, scene, true, false, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, null, null, normalUrl.endsWith('.png') ? '.png' : undefined);
+            material.invertNormalMapY = true; // Unity normal maps might require Y inversion
+        }
+
         sphere.material = material;
 
         // Optionally create an environment for better reflections
