@@ -156,6 +156,7 @@ public static class WebApplicationLauncher
 		app.MapStaticFile("/js/site.js", "text/javascript");
 		app.MapStaticFile("/js/commands_page.js", "text/javascript");
 		app.MapStaticFile("/js/mesh_preview.js", "text/javascript");
+		app.MapStaticFile("/js/material_preview.js", "text/javascript");
 		OnlineDependencies.MapDependencies(app);
 
 		//Normal Pages

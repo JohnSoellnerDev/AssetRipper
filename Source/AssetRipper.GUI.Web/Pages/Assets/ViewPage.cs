@@ -20,6 +20,7 @@ public sealed class ViewPage : DefaultPage
 				new AudioTab(Asset, Path),
 				new ImageTab(Asset, Path),
 				new ModelTab(Asset, Path),
+				new MaterialTab(Asset, Path),
 				new TextTab(Asset, Path),
 				new FontTab(Asset, Path),
 				new VideoTab(Asset, Path),
@@ -39,5 +40,6 @@ public sealed class ViewPage : DefaultPage
 		base.WriteScriptReferences(writer);
 		OnlineDependencies.Babylon.WriteScriptReference(writer);
 		new Script(writer).WithSrc("/js/mesh_preview.js").Close();
+		new Script(writer).WithSrc("/js/material_preview.js").Close();
 	}
 }
