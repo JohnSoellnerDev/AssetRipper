@@ -9,11 +9,11 @@ if (canvas) {
     const createScene = function () {
         const scene = new BABYLON.Scene(engine);
 
-        // Add a light source
-        const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+        // Automatically add default camera and light for proper viewing
+        scene.createDefaultCameraOrLight(true, true, true);
 
-        // Create an ArcRotateCamera
-        const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, BABYLON.Vector3.Zero(), scene);
+        // Retrieve camera reference for user interaction
+        const camera = scene.activeCamera;
         camera.attachControl(canvas, true);
 
         // Create a simple sphere that will display the material
@@ -23,6 +23,9 @@ if (canvas) {
         const material = new BABYLON.PBRMaterial("previewMaterial", scene);
         material.albedoColor = new BABYLON.Color3(1.0, 1.0, 1.0);
         sphere.material = material;
+
+        // Optionally create an environment for better reflections
+        scene.createDefaultEnvironment();
 
         return scene;
     };
