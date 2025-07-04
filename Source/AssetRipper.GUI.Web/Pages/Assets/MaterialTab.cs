@@ -1,5 +1,6 @@
 using AssetRipper.Assets;
 using AssetRipper.GUI.Web.Paths;
+using AssetRipper.SourceGenerated.Classes.ClassID_21;
 
 namespace AssetRipper.GUI.Web.Pages.Assets;
 
