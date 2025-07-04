@@ -46,6 +46,7 @@ internal static class AssetAPI
 		public const string Image = Base + "/Image";
 		public const string Audio = Base + "/Audio";
 		public const string Model = Base + "/Model.glb";
+		public const string Material = Base + "/Material.glb";
 		public const string Font = Base + "/Font";
 		public const string Video = Base + "/Video";
 		public const string Json = Base + "/Json";
@@ -233,6 +234,47 @@ internal static class AssetAPI
 	public static bool HasModelData(IUnityObjectBase asset)
 	{
 		return asset is IMesh;
+	}
+	#endregion
+
+	#region Material
+	public static string GetMaterialUrl(AssetPath path)
+	{
+		return $"{Urls.Material}?{GetPathQuery(path)}";
+	}
+
+	public static Task GetMaterialData(HttpContext context)
+	{
+		context.Response.DisableCaching();
+		if (!TryGetAssetFromQuery(context, out IUnityObjectBase? asset, out Task? failureTask))
+		{
+			return failureTask;
+		}
+
+		if (asset is not IMaterial material)
+		{
+			return context.Response.NotFound("Asset was not a material.");
+		}
+		else
+		{
+			MemoryStream stream = new();
+			try
+			{
+				SceneBuilder sceneBuilder = GlbMaterialBuilder.Build(material);
+				sceneBuilder.ToGltf2().WriteGLB(stream, new WriteSettings() { MergeBuffers = false });
+			}
+			catch (Exception ex)
+			{
+				Logger.Error(ex);
+				return context.Response.NotFound("Material data could not be decoded.");
+			}
+			return Results.Bytes(stream.ToArray(), "model/gltf-binary", "material.glb").ExecuteAsync(context);
+		}
+	}
+
+	public static bool HasMaterialData(IUnityObjectBase asset)
+	{
+		return asset is IMaterial;
 	}
 	#endregion
 
