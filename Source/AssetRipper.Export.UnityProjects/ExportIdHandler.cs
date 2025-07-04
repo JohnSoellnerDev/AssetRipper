@@ -80,7 +80,16 @@ public static class ExportIdHandler
 			do
 			{
 				ulong value = unchecked((ulong)GetInternalId());
-				persistentValue = unchecked(persistentValue + value);
+				// Use checked arithmetic to prevent overflow and maintain predictable behavior
+				try
+				{
+					persistentValue = checked(persistentValue + value);
+				}
+				catch (OverflowException)
+				{
+					// Reset on overflow to prevent unpredictable behavior
+					persistentValue = value;
+				}
 				exportID = prefix + (long)(persistentValue % TenToTheFifthteenth);
 			}
 			while (duplicateChecker(exportID));

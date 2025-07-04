@@ -31,7 +31,7 @@ public sealed class TypeDefinitionConverter
 		}
 		catch (Exception ex)
 		{
-			throw new Exception(string.Format("Exception while processing {0} {1}, error {2}", fieldDefinition.Signature?.FieldType.FullName, fieldDefinition.FullName, ex.Message));
+			throw new Exception($"Exception while processing {fieldDefinition.Signature?.FieldType.FullName} {fieldDefinition.FullName}, error {ex.Message}", ex);
 		}
 	}
 
