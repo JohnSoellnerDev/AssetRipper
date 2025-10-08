@@ -1,0 +1,45 @@
+services:
+  assetripper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: assetripper-dev
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./Source:/app/Source:cached
+      - ./Localizations:/app/Localizations:cached
+      - ./LICENSE.md:/app/LICENSE.md:ro
+      
+      - /app/Source/0Bins
+
+      - ./logs:/app/logs
+      
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+      
+      - ASSETRIPPER_LAUNCH_BROWSER=false
+      
+      - DOTNET_CLI_TELEMETRY_OPTOUT=1
+    networks:
+      - assetripper-network
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  assetripper-network:
+    driver: bridge
+
+volumes:
+  nuget-cache:
+    driver: local
+

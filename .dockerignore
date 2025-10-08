@@ -1,0 +1,82 @@
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE and Editor files
+.vscode/
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build outputs
+**/bin/
+**/obj/
+**/0Bins/
+*.user
+*.suo
+*.cache
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+
+# Logs
+logs/
+*.log
+
+# Node modules
+node_modules/
+
+# Documentation build outputs
+docs/_site/
+docs/api/
+
+# Docker files (don't copy into image)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+generate-sources.sh
+
+# CI/CD
+.github/
+azure-pipelines.yml
+
+# Environment files
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.temp
+
+# Media and large files not needed for build
+Media/
+
+# Tool-specific directories (not needed in container)
+Source/AssetRipper.Tools.*/
+
+# Assembly dumper artifacts (development tools)
+Source/AssetRipper.AssemblyDumper.Downloader/
+Source/AssetRipper.AssemblyDumper.NativeEnumExtractor/
+Source/AssetRipper.AssemblyDumper.NuGetFixer/
+Source/AssetRipper.AssemblyDumper.Recompiler/
+Source/AssetRipper.AssemblyDumper.Tests/
+
+# Test projects (not needed for running the app)
+**/*.Tests/
+
+# README files (except LICENSE)
+README.md
+*.md
+!LICENSE.md
+
